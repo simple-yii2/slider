@@ -1,8 +1,8 @@
 {
     "name": "simple-yii2/slider",
-    "description": "Slider extension module for Yii PHP Framework Version 2",
-    "type": "yii2-extension",
-    "keywords": ["yii2","extension","slider"],
+    "description": "Slider module for Yii 2 framework",
+    "type": "yii2-module",
+    "keywords": ["yii2","module","slider"],
     "license": "BSD-3-Clause",
     "authors": [
         {
