@@ -39,9 +39,22 @@ $this->params['breadcrumbs'] = [
 			}
 		],
 		[
-			'class'=>'yii\grid\ActionColumn',
-			'options'=>['style'=>'width: 50px;'],
-			'template'=>'{update} {delete}',
+			'class' => 'yii\grid\ActionColumn',
+			'options' => ['style' => 'width: 75px;'],
+			'template' => '{images} {update} {delete}',
+			'buttons' => [
+				'images' => function($url, $model, $key) {
+					$title = Yii::t('slider', 'Images');
+
+					return Html::a('<span class="glyphicon glyphicon-picture"></span>', [
+						'image/index', 'slider_id' => $model->id,
+					], [
+						'title' => $title,
+						'aria-label' => $title,
+						'data-pjax' => 0,
+					]);
+				},
+			],
 		],
 	],
 ]) ?>

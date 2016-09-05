@@ -3,10 +3,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-use slider\backend\assets\SliderFormAsset;
 use uploadimage\widgets\UploadImages;
-
-SliderFormAsset::register($this);
 
 ?>
 <?php $form = ActiveForm::begin([
@@ -21,37 +18,11 @@ SliderFormAsset::register($this);
 
 	<?= $form->field($model, 'alias') ?>
 
-	<?= $form->field($model, 'images')->widget(UploadImages::className(), [
-		'id' => 'slider-images',
-		'fileKey' => 'file',
-		'thumbKey' => 'thumb',
-		'thumbWidth' => 1200,
-		'thumbHeight' => 400,
-		'width' => 282,
-		'height' => 94,
-		'data' => function($item) {
-			return [
-				'id' => $item['id'],
-				'title' => $item['title'],
-				'description' => $item['description'],
-				'url' => $item['url'],
-			];
-		},
-		'buttons' => [
-			'settings' => [
-				'label' => '<i class="fa fa-bars"></i>',
-				'title' => Yii::t('slider', 'Settings'),
-			],
-		],
-		'options' => [
-			'data-text-modal' => Yii::t('slider', 'Image settings'),
-			'data-text-title' => Yii::t('slider', 'Title'),
-			'data-text-description' => Yii::t('slider', 'Description'),
-			'data-text-url' => Yii::t('slider', 'Url'),
-			'data-text-cancel' => Yii::t('slider', 'Cancel'),
-			'data-text-save' => Yii::t('slider', 'Save'),
-		],
-	]) ?>
+	<?php if ($model->imageCount) {
+		echo $form->field($model, 'height')->staticControl();
+	} else {
+		echo $form->field($model, 'height');	
+	} ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">

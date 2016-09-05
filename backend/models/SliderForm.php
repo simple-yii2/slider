@@ -28,9 +28,14 @@ class SliderForm extends Model {
 	public $alias;
 
 	/**
-	 * @var array Slider images.
+	 * @var integer Slider widget height.
 	 */
-	public $images = [];
+	public $height;
+
+	/**
+	 * @var integer Slider image count.
+	 */
+	private $_imageCount;
 
 	/**
 	 * @var slider\common\models\Slider Slider model
@@ -39,9 +44,9 @@ class SliderForm extends Model {
 
 	/**
 	 * @inheritdoc
-	 * @param slider\common\models\Slider $object 
+	 * @param \slider\common\models\Slider $object 
 	 */
-	public function __construct($object, $config = [])
+	public function __construct(\slider\common\models\Slider $object, $config = [])
 	{
 		$this->_object = $object;
 
@@ -49,16 +54,8 @@ class SliderForm extends Model {
 		$this->active = $object->active == 0 ? '0' : '1';
 		$this->title = $object->title;
 		$this->alias = $object->alias;
-
-		//images
-		$this->images = array_map(function($v) {
-			return $v->getAttributes();
-		}, $object->images);
-
-		//file caching
-		foreach ($object->images as $image) {
-			Yii::$app->storage->cacheObject($image);
-		}
+		$this->height = $object->height;
+		$this->_imageCount = $object->imageCount;
 
 		parent::__construct($config);
 	}
@@ -72,7 +69,7 @@ class SliderForm extends Model {
 			'active' => Yii::t('slider', 'Active'),
 			'title' => Yii::t('slider', 'Title'),
 			'alias' => Yii::t('slider', 'Alias'),
-			'images' => Yii::t('slider', 'Images'),
+			'height' => Yii::t('slider', 'Height'),
 		];
 	}
 
@@ -85,19 +82,17 @@ class SliderForm extends Model {
 			['active', 'boolean'],
 			[['title', 'alias'], 'string', 'max' => 100],
 			['alias', 'required'],
-			['images', 'safe'],
+			['height', 'integer', 'min' => 100, 'max' => 1000],
 		];
 	}
 
 	/**
-	 * @inheritdoc
+	 * Image count getter.
+	 * @return integer
 	 */
-	public function setAttributes($values, $safeOnly = true)
+	public function getImageCount()
 	{
-		parent::setAttributes($values, $safeOnly);
-
-		if (empty($this->images))
-			$this->images = [];
+		return $this->_imageCount;
 	}
 
 	/**
@@ -116,56 +111,13 @@ class SliderForm extends Model {
 		$object->active = $this->active == 1;
 		$object->title = $this->title;
 		$object->alias = $this->alias;
-		$object->imageCount = sizeof($this->images);
+		$object->height = $this->height;
 
 		//saving object
 		if (!$object->save(false))
 			return false;
 
-		//saving images
-		$this->saveImages($object);
-
 		return true;
-	}
-
-	/**
-	 * Images saving
-	 * @param slider\common\models\Slider $object 
-	 * @return void
-	 */
-	public function saveImages($object)
-	{
-		//old images
-		$old = [];
-		foreach ($object->images as $image) {
-			$old[$image->id] = $image;
-		}
-
-		//insert new and update existing
-		foreach ($this->images as $data) {
-			$id = null;
-			if (!empty($data['id']))
-				$id = $data['id'];
-
-			if (array_key_exists($id, $old)) {
-				$image = $old[$id];
-				unset($old[$id]);
-			} else {
-				$image = new SliderImage();
-				$image->slider_id = $object->id;
-			}
-			$image->setAttributes($data);
-
-			Yii::$app->storage->storeObject($image);
-
-			$image->save(false);
-		}
-
-		//delete old
-		foreach ($old as $image) {
-			Yii::$app->storage->removeObject($image);
-			$image->delete();
-		}
 	}
 
 }

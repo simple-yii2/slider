@@ -2,6 +2,7 @@
 
 namespace slider\common\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 use storage\components\StoredInterface;
@@ -23,12 +24,20 @@ class SliderImage extends ActiveRecord implements StoredInterface
 	/**
 	 * @inheritdoc
 	 */
-	public function rules()
+	public function attributeLabels()
 	{
 		return [
-			[['file', 'thumb', 'description', 'url'], 'string', 'max' => 200],
-			['title', 'string', 'max' => 100],
+			'file' => Yii::t('slider', 'Image'),
 		];
+	}
+
+	/**
+	 * Slider relation
+	 * @return \yii\db\ActiveQueryInterface
+	 */
+	public function getSlider()
+	{
+		return $this->hasOne(Slider::className(), ['id' => 'slider_id']);
 	}
 
 	/**

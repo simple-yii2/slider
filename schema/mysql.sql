@@ -4,6 +4,7 @@ create table if not exists `Slider`
 	`active` tinyint(1) default 1,
 	`alias` varchar(100) default null,
 	`title` varchar(200) default null,
+	`height` int(10) not null,
 	`imageCount` int(10) default null,
 	primary key (`id`),
 	key `alias` (`alias`)

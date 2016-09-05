@@ -4,6 +4,7 @@ namespace slider\backend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 use slider\backend\models\SliderForm;

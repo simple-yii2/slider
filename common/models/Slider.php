@@ -26,6 +26,8 @@ class Slider extends ActiveRecord
 		parent::init();
 
 		$this->active = true;
+		$this->height = 300;
+		$this->imageCount = 0;
 	}
 
 	/**
@@ -52,11 +54,17 @@ class Slider extends ActiveRecord
 
 	/**
 	 * Images relation
-	 * @return ActiveQuery
+	 * @return \yii\db\ActiveQueryInterface
 	 */
 	public function getImages()
 	{
-		return $this->hasMany(SliderImage::className(), ['slider_id' => 'id']);
+		return $this->hasMany(SliderImage::className(), ['slider_id' => 'id'])->inverseOf('slider');
+	}
+
+	public function updateImageCount()
+	{
+		$this->imageCount = $this->getImages()->count();
+		$this->update(false, ['imageCount']);
 	}
 
 }
