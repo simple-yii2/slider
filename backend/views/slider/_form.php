@@ -27,8 +27,8 @@ SliderFormAsset::register($this);
 		'thumbKey' => 'thumb',
 		'thumbWidth' => 1200,
 		'thumbHeight' => 400,
-		'width' => 300,
-		'height' => 100,
+		'width' => 282,
+		'height' => 94,
 		'data' => function($item) {
 			return [
 				'id' => $item['id'],
