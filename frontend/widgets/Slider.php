@@ -48,6 +48,9 @@ class Slider extends Carousel
 			throw new InvalidConfigException('Property "alias" must be set.');
 
 		$this->model = models\Slider::findByAlias($this->alias);
+		
+		if (!$this->model->active)
+			$this->model = null;
 
 		if (empty($this->items))
 			$this->prepareItems();
