@@ -81,8 +81,8 @@ class SliderForm extends Model {
 		return [
 			['active', 'boolean'],
 			[['title', 'alias'], 'string', 'max' => 100],
-			['alias', 'required'],
 			['height', 'integer', 'min' => 100, 'max' => 1000],
+			[['alias', 'height'], 'required'],
 		];
 	}
 

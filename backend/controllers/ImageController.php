@@ -122,13 +122,16 @@ class ImageController extends Controller
 		if ($object === null)
 			throw new BadRequestHttpException(Yii::t('slider', 'Image not found.'));
 
-		$slider = Slider::findOne($object->slider_id);
+		$slider = $object->slider;
 		if ($slider === null)
 			throw new BadRequestHttpException(Yii::t('slider', 'Slider not found.'));
 
 		//object
-		if ($object->delete())
+		if ($object->delete()) {
+			Yii::$app->storage->removeObject($object);
+
 			Yii::$app->session->setFlash('success', Yii::t('slider', 'Image deleted successfully.'));
+		}
 
 		$slider->updateImageCount();
 

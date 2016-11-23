@@ -32,7 +32,7 @@ $this->params['breadcrumbs'] = [
 			'format' => 'html',
 			'value' => function($model, $key, $index, $column) {
 				$title = Html::encode($model->title);
-				$alias = Html::tag('span', $model->alias, ['class' => 'label label-primary']);
+				$alias = Html::tag('span', Html::encode($model->alias), ['class' => 'label label-primary']);
 				$count = Html::tag('span', $model->imageCount, ['class' => 'badge']);
 
 				return $title . '&nbsp;' . $alias . '&nbsp;' . $count;
