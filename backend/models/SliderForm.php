@@ -1,16 +1,17 @@
 <?php
 
-namespace slider\backend\models;
+namespace cms\slider\backend\models;
 
 use Yii;
 use yii\base\Model;
 
-use slider\common\models\SliderImage;
+use cms\slider\common\models\SliderImage;
 
 /**
  * Slider editting form
  */
-class SliderForm extends Model {
+class SliderForm extends Model
+{
 
 	/**
 	 * @var boolean Active.
@@ -38,15 +39,15 @@ class SliderForm extends Model {
 	private $_imageCount;
 
 	/**
-	 * @var slider\common\models\Slider Slider model
+	 * @var cms\slider\common\models\Slider Slider model
 	 */
 	private $_object;
 
 	/**
 	 * @inheritdoc
-	 * @param \slider\common\models\Slider $object 
+	 * @param \cms\slider\common\models\Slider $object 
 	 */
-	public function __construct(\slider\common\models\Slider $object, $config = [])
+	public function __construct(\cms\slider\common\models\Slider $object, $config = [])
 	{
 		$this->_object = $object;
 

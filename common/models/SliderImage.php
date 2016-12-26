@@ -1,6 +1,6 @@
 <?php
 
-namespace slider\common\models;
+namespace cms\slider\common\models;
 
 use Yii;
 use yii\db\ActiveRecord;

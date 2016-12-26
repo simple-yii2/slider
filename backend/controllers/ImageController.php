@@ -1,6 +1,6 @@
 <?php
 
-namespace slider\backend\controllers;
+namespace cms\slider\backend\controllers;
 
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -8,10 +8,10 @@ use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
-use slider\common\models\Slider;
-use slider\common\models\SliderImage;
-use slider\backend\models\SliderImageForm;
-use slider\backend\models\SliderImageSearch;
+use cms\slider\common\models\Slider;
+use cms\slider\common\models\SliderImage;
+use cms\slider\backend\models\SliderImageForm;
+use cms\slider\backend\models\SliderImageSearch;
 
 /**
  * Slider image controller

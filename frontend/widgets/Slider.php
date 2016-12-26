@@ -1,12 +1,12 @@
 <?php
 
-namespace slider\frontend\widgets;
+namespace cms\slider\frontend\widgets;
 
 use yii\base\InvalidConfigException;
 use yii\bootstrap\Carousel;
 use yii\helpers\Html;
 
-use slider\common\models;
+use cms\slider\common\models;
 
 /**
  * Slider widwget
@@ -25,7 +25,7 @@ class Slider extends Carousel
 	public $shuffle = true;
 
 	/**
-	 * @var \slider\common\models\Slider Slider model
+	 * @var cms\slider\common\models\Slider Slider model
 	 */
 	private $model;
 

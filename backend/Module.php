@@ -1,13 +1,14 @@
 <?php
 
-namespace slider\backend;
+namespace cms\slider\backend;
 
 use Yii;
 
 /**
  * Slider backend module
  */
-class Module extends \yii\base\Module {
+class Module extends \yii\base\Module
+{
 
 	/**
 	 * @inheritdoc
@@ -38,9 +39,9 @@ class Module extends \yii\base\Module {
 		//rbac
 		$auth = Yii::$app->getAuthManager();
 		if ($auth->getRole('Slider') === null) {
-			//slider role
-			$slider = $auth->createRole('Slider');
-			$auth->add($slider);
+			//role
+			$role = $auth->createRole('Slider');
+			$auth->add($role);
 		}
 	}
 

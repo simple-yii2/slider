@@ -12,8 +12,6 @@ $this->params['breadcrumbs'] = [
 	$title,
 ];
 
-
-
 ?>
 <h1><?= Html::encode($title) ?></h1>
 

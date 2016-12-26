@@ -1,13 +1,11 @@
 <?php
 
-namespace slider\backend\assets;
+namespace cms\slider\backend\assets;
 
 use yii\web\AssetBundle;
 
 class SliderFormAsset extends AssetBundle
 {
-
-	public $sourcePath = __DIR__ . '/slider-form';
 
 	public $js = [
 		'slider-form.js',
@@ -17,5 +15,12 @@ class SliderFormAsset extends AssetBundle
 		'yii\bootstrap\BootstrapAsset',
 		'yii\web\JqueryAsset',
 	];
+
+	public function init()
+	{
+		parent::init();
+
+		$this->sourcePath = __DIR__ . '/slider-form';
+	}
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace slider\common\models;
+namespace cms\slider\common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -14,7 +14,8 @@ class Slider extends ActiveRecord
 	/**
 	 * @inheritdoc
 	 */
-	public static function tableName() {
+	public static function tableName()
+	{
 		return 'Slider';
 	}
 
@@ -31,20 +32,12 @@ class Slider extends ActiveRecord
 	}
 
 	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels() {
-		return [
-			'title' => Yii::t('slider', 'Title'),
-		];
-	}
-
-	/**
 	 * Find slider by alias
 	 * @param sring $alias Slider alias or id.
 	 * @return Slider
 	 */
-	public static function findByAlias($alias) {
+	public static function findByAlias($alias)
+	{
 		$model = static::findOne(['alias' => $alias]);
 		if ($model === null)
 			$model = static::findOne(['id' => $alias]);
@@ -61,6 +54,10 @@ class Slider extends ActiveRecord
 		return $this->hasMany(SliderImage::className(), ['slider_id' => 'id'])->inverseOf('slider');
 	}
 
+	/**
+	 * Update image count
+	 * @return void
+	 */
 	public function updateImageCount()
 	{
 		$this->imageCount = $this->getImages()->count();

@@ -1,15 +1,15 @@
 <?php
 
-namespace slider\backend\controllers;
+namespace cms\slider\backend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
-use slider\backend\models\SliderForm;
-use slider\backend\models\SliderSearch;
-use slider\common\models\Slider;
+use cms\slider\backend\models\SliderForm;
+use cms\slider\backend\models\SliderSearch;
+use cms\slider\common\models\Slider;
 
 /**
  * Slider controller.

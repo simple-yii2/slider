@@ -1,20 +1,30 @@
 <?php
 
-namespace slider\backend\models;
+namespace cms\slider\backend\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
 
-use slider\common\models\Slider;
+use cms\slider\common\models\Slider;
 
 /**
  * Slider search model
  */
-class SliderSearch extends Slider {
+class SliderSearch extends Slider
+{
 
 	/**
-	 * Search rules
-	 * @return array
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'title' => Yii::t('slider', 'Title'),
+		];
+	}
+
+	/**
+	 * @inheritdoc
 	 */
 	public function rules() {
 		return [
@@ -27,9 +37,10 @@ class SliderSearch extends Slider {
 	 * @param array $params Attributes array
 	 * @return yii\data\ActiveDataProvider
 	 */
-	public function search($params) {
+	public function search($params)
+	{
 		//ActiveQuery
-		$query = Slider::find();
+		$query = static::find();
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,

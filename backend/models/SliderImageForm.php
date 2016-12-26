@@ -1,16 +1,17 @@
 <?php
 
-namespace slider\backend\models;
+namespace cms\slider\backend\models;
 
 use Yii;
 use yii\base\Model;
 
-use slider\common\models\SliderImage;
+use cms\slider\common\models\SliderImage;
 
 /**
  * Slider image editting form
  */
-class SliderImageForm extends Model {
+class SliderImageForm extends Model
+{
 
 	/**
 	 * @var string Image file.
@@ -38,15 +39,15 @@ class SliderImageForm extends Model {
 	public $url;
 
 	/**
-	 * @var \slider\common\models\SliderImage Image model
+	 * @var cms\slider\common\models\SliderImage Image model
 	 */
 	private $_object;
 
 	/**
 	 * @inheritdoc
-	 * @param \slider\common\models\SliderImage $object 
+	 * @param cms\slider\common\models\SliderImage $object 
 	 */
-	public function __construct(\slider\common\models\SliderImage $object, $config = [])
+	public function __construct(\cms\slider\common\models\SliderImage $object, $config = [])
 	{
 		$this->_object = $object;
 
