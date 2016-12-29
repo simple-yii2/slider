@@ -3,12 +3,14 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-use uploadimage\widgets\UploadImage;
+use dkhlystov\uploadimage\widgets\UploadImage;
 
 $thumbHeight = $slider->height;
 $height = $thumbHeight / 1200 * 282;
 if ($height < 20)
 	$height = 20;
+
+$imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight . '</span>';
 
 ?>
 <?php $form = ActiveForm::begin([
@@ -23,7 +25,7 @@ if ($height < 20)
 
 	<?= $form->field($model, 'url') ?>
 
-	<?= $form->field($model, 'file')->widget(UploadImage::className(), [
+	<?= $form->field($model, 'file')->label($model->getAttributeLabel('file') . $imageSize)->widget(UploadImage::className(), [
 		'id' => 'slider-image',
 		'thumbAttribute' => 'thumb',
 		'thumbWidth' => 1200,
