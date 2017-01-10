@@ -28,7 +28,11 @@ $this->params['breadcrumbs'] = [
 			'attribute' => 'file',
 			'format' => 'html',
 			'value' => function($model, $key, $index, $column) {
-				return Html::img($model->thumb, ['width' => 200]);
+				$result = Html::img($model->thumb, ['height' => 20]);
+
+				$result .= '&nbsp;' . Html::encode($model->title);
+
+				return $result;
 			}
 		],
 		[
