@@ -80,9 +80,14 @@ class Slider extends Carousel
 			if (!empty($image->description))
 				$caption .= Html::tag('p', $image->description);
 
+			$options = [];
+			if (!empty($image->background))
+				Html::addCssStyle($options, ['background-color' => $image->background]);
+
 			$items[] = [
 				'content' => $content,
 				'caption' => $caption,
+				'options' => $options,
 			];
 		}
 

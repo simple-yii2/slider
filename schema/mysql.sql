@@ -16,6 +16,7 @@ create table if not exists `SliderImage`
 	`slider_id` int(10) not null,
 	`file` varchar(200) default null,
 	`thumb` varchar(200) default null,
+	`background` varchar(10) default null,
 	`title` varchar(100) default null,
 	`description` varchar(200) default null,
 	`url` varchar(200) default null,

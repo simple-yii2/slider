@@ -18,6 +18,7 @@ return [
 	'Images' => 'Изображения',
 	'Description' => 'Описание',
 	'Url' => 'Ссылка',
+	'Background color' => 'Цвет фона',
 
 	'Save' => 'Сохранить',
 	'Cancel' => 'Отмена',

@@ -36,6 +36,8 @@ $imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight .
 		'maxImageHeight' => 1200,
 	]) ?>
 
+	<?= $form->field($model, 'background') ?>
+
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">
 			<?= Html::submitButton(Yii::t('slider', 'Save'), ['class' => 'btn btn-primary']) ?>

@@ -29,6 +29,11 @@ class SliderImageForm extends Model
 	public $title;
 
 	/**
+	 * @var string Background color
+	 */
+	public $background;
+
+	/**
 	 * @var string Image description.
 	 */
 	public $description;
@@ -54,6 +59,7 @@ class SliderImageForm extends Model
 		//attributes
 		$this->file = $object->file;
 		$this->thumb = $object->thumb;
+		$this->background = $object->background;
 		$this->title = $object->title;
 		$this->description = $object->description;
 		$this->url = $object->url;
@@ -71,6 +77,7 @@ class SliderImageForm extends Model
 	{
 		return [
 			'file' => Yii::t('slider', 'Image'),
+			'background' => Yii::t('slider', 'Background color'),
 			'title' => Yii::t('slider', 'Title'),
 			'description' => Yii::t('slider', 'Description'),
 			'url' => Yii::t('slider', 'Url'),
@@ -84,6 +91,7 @@ class SliderImageForm extends Model
 	{
 		return [
 			[['file', 'thumb', 'description', 'url'], 'string', 'max' => 200],
+			['background', 'string', 'max' => 10],
 			['title', 'string', 'max' => 100],
 			['file', 'required'],
 			['url', 'url'],
@@ -105,6 +113,7 @@ class SliderImageForm extends Model
 		//attributes
 		$object->file = $this->file;
 		$object->thumb = $this->thumb;
+		$object->background = $this->background;
 		$object->title = $this->title;
 		$object->description = $this->description;
 		$object->url = $this->url;
