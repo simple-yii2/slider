@@ -55,6 +55,9 @@ class Slider extends Carousel
 		if (empty($this->items))
 			$this->prepareItems();
 
+		if (sizeof($this->items) < 2)
+			$this->controls = $this->showIndicators = false;
+
 		$this->registerClientScript();
 	}
 
