@@ -49,7 +49,7 @@ class Slider extends Carousel
 
 		$this->model = models\Slider::findByAlias($this->alias);
 		
-		if (!$this->model->active)
+		if ($this->model && !$this->model->active)
 			$this->model = null;
 
 		if (empty($this->items))
