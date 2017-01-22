@@ -2,42 +2,21 @@
 
 namespace cms\slider\common\models;
 
-use Yii;
-use yii\db\ActiveRecord;
-
 use dkhlystov\storage\components\StoredInterface;
 
 /**
  * Slider image active record
  */
-class SliderImage extends ActiveRecord implements StoredInterface
+class SliderImage extends BaseSlider implements StoredInterface
 {
 
 	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return 'SliderImage';
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-			'file' => Yii::t('slider', 'Image'),
-		];
-	}
-
-	/**
-	 * Slider relation
-	 * @return \yii\db\ActiveQueryInterface
+	 * Slider
+	 * @return Slider
 	 */
 	public function getSlider()
 	{
-		return $this->hasOne(Slider::className(), ['id' => 'slider_id']);
+		return $this->parents(1)->one();
 	}
 
 	/**

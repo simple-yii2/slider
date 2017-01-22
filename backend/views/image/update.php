@@ -8,7 +8,6 @@ $this->title = $title . ' | ' . Yii::$app->name;
 
 $this->params['breadcrumbs'] = [
 	['label' => Yii::t('slider', 'Slider'), 'url' => ['slider/index']],
-	['label' => $slider->title, 'url' => ['index']],
 	$title,
 ];
 
@@ -17,5 +16,6 @@ $this->params['breadcrumbs'] = [
 
 <?= $this->render('form', [
 	'model' => $model,
-	'slider' => $slider,
+	'id' => $id,
+	'parent' => $parent,
 ]) ?>

@@ -2,22 +2,11 @@
 
 namespace cms\slider\common\models;
 
-use Yii;
-use yii\db\ActiveRecord;
-
 /**
  * Slider active record
  */
-class Slider extends ActiveRecord
+class Slider extends BaseSlider
 {
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return 'Slider';
-	}
 
 	/**
 	 * @inheritdoc
@@ -26,9 +15,10 @@ class Slider extends ActiveRecord
 	{
 		parent::init();
 
-		$this->active = true;
-		$this->height = 300;
-		$this->imageCount = 0;
+		if ($this->active === null)
+			$this->active = true;
+		if ($this->height === null)
+			$this->height = 300;
 	}
 
 	/**
@@ -46,22 +36,12 @@ class Slider extends ActiveRecord
 	}
 
 	/**
-	 * Images relation
-	 * @return \yii\db\ActiveQueryInterface
+	 * Images
+	 * @return SliderImage[]
 	 */
 	public function getImages()
 	{
-		return $this->hasMany(SliderImage::className(), ['slider_id' => 'id'])->inverseOf('slider');
-	}
-
-	/**
-	 * Update image count
-	 * @return void
-	 */
-	public function updateImageCount()
-	{
-		$this->imageCount = $this->getImages()->count();
-		$this->update(false, ['imageCount']);
+		return $this->children()->all();
 	}
 
 }

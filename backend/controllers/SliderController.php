@@ -3,12 +3,13 @@
 namespace cms\slider\backend\controllers;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 use cms\slider\backend\models\SliderForm;
-use cms\slider\backend\models\SliderSearch;
+use cms\slider\common\models\BaseSlider;
 use cms\slider\common\models\Slider;
 
 /**
@@ -34,16 +35,21 @@ class SliderController extends Controller
 	}
 
 	/**
-	 * Slider list.
-	 * @return void
+	 * Tree
+	 * @param integer|null $id Initial item id
+	 * @return string
 	 */
-	public function actionIndex()
+	public function actionIndex($id = null)
 	{
-		$model = new SliderSearch;
+		$initial = BaseSlider::findOne($id);
+
+		$dataProvider = new ActiveDataProvider([
+			'query' => BaseSlider::find(),
+		]);
 
 		return $this->render('index', [
-			'dataProvider' => $model->search(Yii::$app->getRequest()->get()),
-			'model' => $model,
+			'dataProvider' => $dataProvider,
+			'initial' => $initial,
 		]);
 	}
 
@@ -96,20 +102,57 @@ class SliderController extends Controller
 	public function actionDelete($id)
 	{
 		$object = Slider::findOne($id);
-		if ($object === null)
-			throw new BadRequestHttpException(Yii::t('slider', 'Slider not found.'));
+		if ($object === null || !$object->isRoot())
+			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
 
 		//images
 		foreach ($object->images as $image) {
-			$image->delete();
+			$image->deleteWithChildren();
 			Yii::$app->storage->removeObject($image);
 		}
 
 		//object
-		if ($object->delete())
-			Yii::$app->session->setFlash('success', Yii::t('slider', 'Slider deleted successfully.'));
+		if ($object->deleteWithChildren())
+			Yii::$app->session->setFlash('success', Yii::t('slider', 'Item deleted successfully.'));
 
 		return $this->redirect(['index']);
+	}
+
+	/**
+	 * Move
+	 * @param integer $id 
+	 * @param integer $target 
+	 * @param integer $position 
+	 * @return void
+	 */
+	public function actionMove($id, $target, $position)
+	{
+		$object = Slider::findOne($id);
+		if ($object === null)
+			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
+		$oIsRoot = $object->isRoot();
+
+		$t = Slider::findOne($target);
+		if ($t === null)
+			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
+		$tIsRoot = $t->isRoot();
+
+		switch ($position) {
+			case 0:
+				if (!($oIsRoot || $tIsRoot))
+					$object->insertBefore($t);
+				break;
+
+			case 1:
+				if (!$oIsRoot && $tIsRoot)
+					$object->appendTo($t);
+				break;
+			
+			case 2:
+				if (!($oIsRoot || $tIsRoot))
+					$object->insertAfter($t);
+				break;
+		}
 	}
 
 }

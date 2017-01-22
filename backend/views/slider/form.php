@@ -18,7 +18,7 @@ use uploadimage\widgets\UploadImages;
 
 	<?= $form->field($model, 'alias') ?>
 
-	<?php if ($model->imageCount) {
+	<?php if ($model->getObject()->children()->count()) {
 		echo $form->field($model, 'height')->staticControl();
 	} else {
 		echo $form->field($model, 'height');	

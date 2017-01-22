@@ -36,50 +36,30 @@ class ImageController extends Controller
 	}
 
 	/**
-	 * Image list
-	 * @param string $slider_id Slider id
-	 * @return void
+	 * Create
+	 * @param integer $id 
+	 * @return string
 	 */
-	public function actionIndex($slider_id)
+	public function actionCreate($id)
 	{
-		$slider = Slider::findOne($slider_id);
-		if ($slider === null)
-			throw new BadRequestHttpException(Yii::t('slider', 'Slider not found.'));
+		$parent = Slider::findOne($id);
+		if ($parent === null)
+			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
 
-		$dataProvider = new ActiveDataProvider([
-			'query' => SliderImage::find()->andWhere(['slider_id' => $slider->id]),
-		]);
+		$model = new SliderImageForm;
 
-		return $this->render('index', [
-			'dataProvider' => $dataProvider,
-			'slider' => $slider,
-		]);
-	}
-
-	/**
-	 * Image create
-	 * @param string $slider_id Slider id
-	 * @return void
-	 */
-	public function actionCreate($slider_id)
-	{
-		$slider = Slider::findOne($slider_id);
-		if ($slider === null)
-			throw new BadRequestHttpException(Yii::t('slider', 'Slider not found.'));
-
-		$object = new SliderImage;
-		$object->slider_id = $slider->id;
-
-		$model = new SliderImageForm($object);
-
-		if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
+		if ($model->load(Yii::$app->getRequest()->post()) && $model->save($parent)) {
 			Yii::$app->session->setFlash('success', Yii::t('slider', 'Changes saved successfully.'));
-			return $this->redirect(['index', 'slider_id' => $slider->id]);
+			return $this->redirect([
+				'slider/index',
+				'id' => $model->getObject()->id,
+			]);
 		}
 
 		return $this->render('create', [
 			'model' => $model,
-			'slider' => $slider,
+			'id' => $id,
+			'parent' => $parent,
 		]);
 	}
 
@@ -91,23 +71,23 @@ class ImageController extends Controller
 	public function actionUpdate($id)
 	{
 		$object = SliderImage::findOne($id);
-		if ($object === null)
-			throw new BadRequestHttpException(Yii::t('slider', 'Image not found.'));
-
-		$slider = Slider::findOne($object->slider_id);
-		if ($slider === null)
-			throw new BadRequestHttpException(Yii::t('slider', 'Slider not found.'));
+		if ($object === null || $object->isRoot())
+			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
 
 		$model = new SliderImageForm($object);
 
 		if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
 			Yii::$app->session->setFlash('success', Yii::t('slider', 'Changes saved successfully.'));
-			return $this->redirect(['index', 'slider_id' => $slider->id]);
+			return $this->redirect([
+				'slider/index',
+				'id' => $model->getObject()->id,
+			]);
 		}
 
 		return $this->render('update', [
 			'model' => $model,
-			'slider' => $slider,
+			'id' => $object->id,
+			'parent' => $object->parents(1)->one(),
 		]);
 	}
 
@@ -119,23 +99,20 @@ class ImageController extends Controller
 	public function actionDelete($id)
 	{
 		$object = SliderImage::findOne($id);
-		if ($object === null)
-			throw new BadRequestHttpException(Yii::t('slider', 'Image not found.'));
+		if ($object === null || $object->isRoot())
+			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
 
-		$slider = $object->slider;
-		if ($slider === null)
-			throw new BadRequestHttpException(Yii::t('slider', 'Slider not found.'));
+		$sibling = $object->prev()->one();
+		if ($sibling === null)
+			$sibling = $object->next()->one();
 
-		//object
-		if ($object->delete()) {
+		if ($object->deleteWithChildren()) {
 			Yii::$app->storage->removeObject($object);
 
-			Yii::$app->session->setFlash('success', Yii::t('slider', 'Image deleted successfully.'));
+			Yii::$app->session->setFlash('success', Yii::t('slider', 'Item deleted successfully.'));
 		}
 
-		$slider->updateImageCount();
-
-		return $this->redirect(['index', 'slider_id' => $slider->id]);
+		return $this->redirect(['slider/index', 'id' => $sibling ? $sibling->id : null]);
 	}
 
 }

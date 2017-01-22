@@ -5,6 +5,7 @@ namespace cms\slider\backend\models;
 use Yii;
 use yii\base\Model;
 
+use cms\slider\common\models\Slider;
 use cms\slider\common\models\SliderImage;
 
 /**
@@ -34,20 +35,15 @@ class SliderForm extends Model
 	public $height;
 
 	/**
-	 * @var integer Slider image count.
-	 */
-	private $_imageCount;
-
-	/**
-	 * @var cms\slider\common\models\Slider Slider model
+	 * @var Slider Slider model
 	 */
 	private $_object;
 
 	/**
 	 * @inheritdoc
-	 * @param \cms\slider\common\models\Slider $object 
+	 * @param Slider $object 
 	 */
-	public function __construct(\cms\slider\common\models\Slider $object, $config = [])
+	public function __construct(Slider $object, $config = [])
 	{
 		$this->_object = $object;
 
@@ -56,9 +52,17 @@ class SliderForm extends Model
 		$this->title = $object->title;
 		$this->alias = $object->alias;
 		$this->height = $object->height;
-		$this->_imageCount = $object->imageCount;
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * Object getter
+	 * @return Slider
+	 */
+	public function getObject()
+	{
+		return $this->_object;
 	}
 
 	/**
@@ -88,15 +92,6 @@ class SliderForm extends Model
 	}
 
 	/**
-	 * Image count getter.
-	 * @return integer
-	 */
-	public function getImageCount()
-	{
-		return $this->_imageCount;
-	}
-
-	/**
 	 * Object saving
 	 * @return boolean
 	 */
@@ -115,8 +110,14 @@ class SliderForm extends Model
 		$object->height = $this->height;
 
 		//saving object
-		if (!$object->save(false))
-			return false;
+		if ($object->getIsNewRecord()) {
+			if (!$object->makeRoot(false))
+				return false;
+		} else {
+			if (!$object->save(false))
+				return false;
+		}
+
 
 		return true;
 	}

@@ -5,6 +5,7 @@ namespace cms\slider\backend\models;
 use Yii;
 use yii\base\Model;
 
+use cms\slider\common\models\Slider;
 use cms\slider\common\models\SliderImage;
 
 /**
@@ -44,16 +45,19 @@ class SliderImageForm extends Model
 	public $url;
 
 	/**
-	 * @var cms\slider\common\models\SliderImage Image model
+	 * @var SliderImage Image model
 	 */
 	private $_object;
 
 	/**
 	 * @inheritdoc
-	 * @param cms\slider\common\models\SliderImage $object 
+	 * @param SliderImage $object 
 	 */
-	public function __construct(\cms\slider\common\models\SliderImage $object, $config = [])
+	public function __construct(SliderImage $object = null, $config = [])
 	{
+		if ($object === null)
+			$object = new SliderImage;
+
 		$this->_object = $object;
 
 		//attributes
@@ -68,6 +72,15 @@ class SliderImageForm extends Model
 		Yii::$app->storage->cacheObject($object);
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * Object getter
+	 * @return SliderImage
+	 */
+	public function getObject()
+	{
+		return $this->_object;
 	}
 
 	/**
@@ -94,15 +107,15 @@ class SliderImageForm extends Model
 			['background', 'string', 'max' => 10],
 			['title', 'string', 'max' => 100],
 			['file', 'required'],
-			['url', 'url'],
 		];
 	}
 
 	/**
 	 * Object saving
+	 * @param Slider|null $parent 
 	 * @return boolean
 	 */
-	public function save()
+	public function save(Slider $parent = null)
 	{
 		//validation
 		if (!$this->validate())
@@ -122,17 +135,13 @@ class SliderImageForm extends Model
 		Yii::$app->storage->storeObject($object);
 
 		//saving object
-		if (!$object->save(false))
-			return false;
+		if ($object->getIsNewRecord()) {
+			if (!$object->appendTo($parent, false))
+				return false;
+		} else {
+			if (!$object->save(false))
+				return false;
 
-		//image count
-		$object->slider->updateImageCount();
-
-
-		$slider = $object->slider;
-		if ($slider !== null) {
-			$slider->imageCount = SliderImage::find()->andWhere(['slider_id' => $object->slider_id])->count();
-			$slider->update(false, ['imageCount']);
 		}
 
 		return true;

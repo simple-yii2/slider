@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 use dkhlystov\uploadimage\widgets\UploadImage;
 
-$thumbHeight = $slider->height;
+$thumbHeight = $parent->height;
 $height = $thumbHeight / 1200 * 282;
 if ($height < 20)
 	$height = 20;
@@ -41,7 +41,7 @@ $imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight .
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">
 			<?= Html::submitButton(Yii::t('slider', 'Save'), ['class' => 'btn btn-primary']) ?>
-			<?= Html::a(Yii::t('slider', 'Cancel'), ['index', 'slider_id' => $slider->id], ['class' => 'btn btn-default']) ?>
+			<?= Html::a(Yii::t('slider', 'Cancel'), ['slider/index', 'id' => $id], ['class' => 'btn btn-default']) ?>
 		</div>
 	</div>
 
