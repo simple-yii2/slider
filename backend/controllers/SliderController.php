@@ -130,27 +130,26 @@ class SliderController extends Controller
 		$object = Slider::findOne($id);
 		if ($object === null)
 			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
-		$oIsRoot = $object->isRoot();
+		if ($object->isRoot())
+			return;
+
 
 		$t = Slider::findOne($target);
 		if ($t === null)
 			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
-		$tIsRoot = $t->isRoot();
+		if ($t->isRoot())
+			return;
+
+		if ($object->tree != $t->tree)
+			return;
 
 		switch ($position) {
 			case 0:
-				if (!($oIsRoot || $tIsRoot))
-					$object->insertBefore($t);
-				break;
-
-			case 1:
-				if (!$oIsRoot && $tIsRoot)
-					$object->appendTo($t);
+				$object->insertBefore($t);
 				break;
 			
 			case 2:
-				if (!($oIsRoot || $tIsRoot))
-					$object->insertAfter($t);
+				$object->insertAfter($t);
 				break;
 		}
 	}

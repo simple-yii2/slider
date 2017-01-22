@@ -29,17 +29,20 @@ $this->params['breadcrumbs'] = [
 	'tableOptions' => ['class' => 'table table-condensed'],
 	'pluginOptions' => [
 		'onMoveOver' => new JsExpression('function (item, helper, target, position) {
-			if (item.data("depth") == 0)
+			if (item.data("depth") == 0 || target.data("depth") == 0)
 				return false;
-			
-			if (target.data("depth") == 0)
-				return position == 1;
+
+			if (item.data("tree") != target.data("tree"))
+				return false;
 
 			return position != 1;
 		}'),
 	],
 	'rowOptions' => function ($model, $key, $index, $grid) {
-		$options = ['data-depth' => $model->depth];
+		$options = ['data' => [
+			'depth' => $model->depth,
+			'tree' => $model->tree,
+		]];
 
 		if (!$model->active)
 			Html::addCssClass($options, 'warning');
