@@ -41,7 +41,9 @@ $imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight .
 		'options' => ['data-url-color' => Url::to(['color'])],
 	]) ?>
 
-	<?= $form->field($model, 'background') ?>
+	<?= $form->field($model, 'background')->widget('dkhlystov\widgets\Colorpicker', [
+		'clientOptions' => ['format' => 'hex'],
+	]) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">

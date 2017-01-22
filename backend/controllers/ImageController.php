@@ -128,7 +128,7 @@ class ImageController extends Controller
 
 		$image = new ImageFile($filename);
 
-		return Json::encode('#' . dechex($image->colorAt(0, 0)));
+		return Json::encode('#' . str_pad(dechex($image->colorAt(0, 0)), 6, '0', STR_PAD_LEFT));
 	}
 
 }
