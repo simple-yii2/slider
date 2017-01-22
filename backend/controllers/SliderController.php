@@ -55,7 +55,7 @@ class SliderController extends Controller
 
 	/**
 	 * Slider creating.
-	 * @return void
+	 * @return string
 	 */
 	public function actionCreate()
 	{
@@ -74,7 +74,7 @@ class SliderController extends Controller
 	/**
 	 * Slider updating.
 	 * @param integer $id Slider id.
-	 * @return void
+	 * @return string
 	 */
 	public function actionUpdate($id)
 	{
@@ -97,7 +97,7 @@ class SliderController extends Controller
 	/**
 	 * Slider deleting.
 	 * @param integer $id Slider id.
-	 * @return void
+	 * @return string
 	 */
 	public function actionDelete($id)
 	{
@@ -123,7 +123,7 @@ class SliderController extends Controller
 	 * @param integer $id 
 	 * @param integer $target 
 	 * @param integer $position 
-	 * @return void
+	 * @return string
 	 */
 	public function actionMove($id, $target, $position)
 	{

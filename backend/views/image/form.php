@@ -2,8 +2,12 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 use dkhlystov\uploadimage\widgets\UploadImage;
+use cms\slider\backend\assets\ImageFormAsset;
+
+ImageFormAsset::register($this);
 
 $thumbHeight = $parent->height;
 $height = $thumbHeight / 1200 * 282;
@@ -34,6 +38,7 @@ $imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight .
 		'height' => $height,
 		'maxImageWidth' => 1200,
 		'maxImageHeight' => 1200,
+		'options' => ['data-url-color' => Url::to(['color'])],
 	]) ?>
 
 	<?= $form->field($model, 'background') ?>

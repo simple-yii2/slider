@@ -5,9 +5,11 @@ namespace cms\slider\backend\controllers;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
+use dkhlystov\helpers\ImageFile;
 use cms\slider\common\models\Slider;
 use cms\slider\common\models\SliderImage;
 use cms\slider\backend\models\SliderImageForm;
@@ -113,6 +115,20 @@ class ImageController extends Controller
 		}
 
 		return $this->redirect(['slider/index', 'id' => $sibling ? $sibling->id : null]);
+	}
+
+	/**
+	 * Determine background color for thumb file
+	 * @param string $thumb 
+	 * @return string
+	 */
+	public function actionColor($thumb)
+	{
+		$filename = Yii::getAlias('@webroot') . $thumb;
+
+		$image = new ImageFile($filename);
+
+		return Json::encode('#' . dechex($image->colorAt(0, 0)));
 	}
 
 }

@@ -4,11 +4,11 @@ namespace cms\slider\backend\assets;
 
 use yii\web\AssetBundle;
 
-class SliderFormAsset extends AssetBundle
+class ImageFormAsset extends AssetBundle
 {
 
 	public $js = [
-		'slider-form.js',
+		'image-form.js',
 	];
 	
 	public $depends = [
@@ -20,7 +20,7 @@ class SliderFormAsset extends AssetBundle
 	{
 		parent::init();
 
-		$this->sourcePath = __DIR__ . '/slider-form';
+		$this->sourcePath = __DIR__ . '/image-form';
 	}
 
 }
