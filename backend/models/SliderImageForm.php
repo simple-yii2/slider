@@ -141,7 +141,6 @@ class SliderImageForm extends Model
 		} else {
 			if (!$object->save(false))
 				return false;
-
 		}
 
 		return true;

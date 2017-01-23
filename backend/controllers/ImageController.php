@@ -3,7 +3,6 @@
 namespace cms\slider\backend\controllers;
 
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
@@ -13,7 +12,6 @@ use dkhlystov\helpers\ImageFile;
 use cms\slider\common\models\Slider;
 use cms\slider\common\models\SliderImage;
 use cms\slider\backend\models\SliderImageForm;
-use cms\slider\backend\models\SliderImageSearch;
 
 /**
  * Slider image controller
@@ -38,8 +36,8 @@ class ImageController extends Controller
 	}
 
 	/**
-	 * Create
-	 * @param integer $id 
+	 * Creating
+	 * @param integer $id
 	 * @return string
 	 */
 	public function actionCreate($id)
@@ -66,8 +64,8 @@ class ImageController extends Controller
 	}
 
 	/**
-	 * Image update
-	 * @param string $id Slider image id
+	 * Updating
+	 * @param string $id
 	 * @return void
 	 */
 	public function actionUpdate($id)
@@ -94,8 +92,8 @@ class ImageController extends Controller
 	}
 
 	/**
-	 * Image delete
-	 * @param string $id Slider image id
+	 * Deleting
+	 * @param string $id
 	 * @return void
 	 */
 	public function actionDelete($id)

@@ -133,7 +133,6 @@ class SliderController extends Controller
 		if ($object->isRoot())
 			return;
 
-
 		$t = BaseSlider::findOne($target);
 		if ($t === null)
 			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));

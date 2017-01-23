@@ -121,7 +121,6 @@ class SliderForm extends Model
 				return false;
 		}
 
-
 		return true;
 	}
 

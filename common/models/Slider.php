@@ -2,6 +2,8 @@
 
 namespace cms\slider\common\models;
 
+use Yii;
+
 /**
  * Slider active record
  */
@@ -17,6 +19,7 @@ class Slider extends BaseSlider
 
 		if ($this->active === null)
 			$this->active = true;
+
 		if ($this->height === null)
 			$this->height = 300;
 	}
