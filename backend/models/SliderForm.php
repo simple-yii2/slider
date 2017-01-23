@@ -41,10 +41,13 @@ class SliderForm extends Model
 
 	/**
 	 * @inheritdoc
-	 * @param Slider $object 
+	 * @param Slider|null $object 
 	 */
-	public function __construct(Slider $object, $config = [])
+	public function __construct(Slider $object = null, $config = [])
 	{
+		if ($object === null)
+			$object = new Slider;
+		
 		$this->_object = $object;
 
 		//attributes

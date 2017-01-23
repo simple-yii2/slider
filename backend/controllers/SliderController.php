@@ -59,7 +59,7 @@ class SliderController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model = new SliderForm(new Slider);
+		$model = new SliderForm;
 
 		if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
 			Yii::$app->session->setFlash('success', Yii::t('slider', 'Changes saved successfully.'));
