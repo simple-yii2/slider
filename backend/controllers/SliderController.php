@@ -54,7 +54,7 @@ class SliderController extends Controller
 	}
 
 	/**
-	 * Slider creating.
+	 * Creating
 	 * @return string
 	 */
 	public function actionCreate()
@@ -72,14 +72,14 @@ class SliderController extends Controller
 	}
 
 	/**
-	 * Slider updating.
+	 * Updating
 	 * @param integer $id Slider id.
 	 * @return string
 	 */
 	public function actionUpdate($id)
 	{
 		$object = Slider::findOne($id);
-		if ($object === null)
+		if ($object === null || !$object->isRoot())
 			throw new BadRequestHttpException(Yii::t('slider', 'Slider not found.'));
 
 		$model = new SliderForm($object);
@@ -95,7 +95,7 @@ class SliderController extends Controller
 	}
 
 	/**
-	 * Slider deleting.
+	 * Deleting
 	 * @param integer $id Slider id.
 	 * @return string
 	 */
