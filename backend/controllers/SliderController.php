@@ -127,14 +127,14 @@ class SliderController extends Controller
 	 */
 	public function actionMove($id, $target, $position)
 	{
-		$object = Slider::findOne($id);
+		$object = BaseSlider::findOne($id);
 		if ($object === null)
 			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
 		if ($object->isRoot())
 			return;
 
 
-		$t = Slider::findOne($target);
+		$t = BaseSlider::findOne($target);
 		if ($t === null)
 			throw new BadRequestHttpException(Yii::t('slider', 'Item not found.'));
 		if ($t->isRoot())
