@@ -53,6 +53,7 @@ $this->params['breadcrumbs'] = [
 		[
 			'attribute' => 'title',
 			'format' => 'html',
+			'header' => Html::encode(Yii::t('slider', 'Title')),
 			'value' => function($model, $key, $index, $column) {
 				if ($model instanceof Slider) {
 					$title = Html::encode($model->title);
