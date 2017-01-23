@@ -11,15 +11,6 @@ class SliderImage extends BaseSlider implements StoredInterface
 {
 
 	/**
-	 * Slider
-	 * @return Slider
-	 */
-	public function getSlider()
-	{
-		return $this->parents(1)->one();
-	}
-
-	/**
 	 * Return files from attributes
 	 * @param array $attributes 
 	 * @return array
