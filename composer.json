@@ -16,7 +16,8 @@
         "dkhlystov/yii2-storage": "*",
         "dkhlystov/yii2-uploadimage": "*",
         "dkhlystov/yii2-treegrid": "*",
-        "dkhlystov/yii2-colorpicker": "*"
+        "dkhlystov/yii2-colorpicker": "*",
+        "simple-yii2/cms": ">=1.0.0"
     },
     "autoload": {
         "psr-4": {
