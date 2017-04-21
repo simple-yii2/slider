@@ -5,8 +5,8 @@ namespace cms\slider\frontend\widgets;
 use yii\base\InvalidConfigException;
 use yii\bootstrap\Carousel;
 use yii\helpers\Html;
-
 use cms\slider\common\models;
+use cms\slider\frontend\widgets\assets\SliderAsset;
 
 /**
  * Slider widwget
@@ -23,6 +23,16 @@ class Slider extends Carousel
 	 * @var boolean Set to true in needed to shuffle slider images
 	 */
 	public $shuffle = true;
+
+	/**
+	 * @var array title tag options
+	 */
+	public $titleOptions = ['class' => 'h4'];
+
+	/**
+	 * @var array description tag options
+	 */
+	public $descriptionOptions = [];
 
 	/**
 	 * @var cms\slider\common\models\Slider Slider model
@@ -72,24 +82,38 @@ class Slider extends Carousel
 			return;
 
 		$items = [];
-		foreach ($model->images as $image) {
-			$content = Html::img($image->thumb);
-			if (!empty($image->url))
-				$content = Html::a($content, $image->url);
+		foreach ($model->images as $item) {
+			$image = Html::img($item->thumb);
 
 			$caption = '';
-			if (!empty($image->title))
-				$caption .= Html::tag('h4', $image->title);
-			if (!empty($image->description))
-				$caption .= Html::tag('p', $image->description);
+			//title
+			if (!empty($item->title)) {
+				$o = $this->titleOptions;
+				Html::addCssClass($o, 'carousel-title');
+
+				$caption .= Html::tag('span', $item->title, $o);
+			}
+			//description
+			if (!empty($item->description)) {
+				$o = $this->descriptionOptions;
+				Html::addCssClass($o, 'carousel-title');
+
+				$caption .= Html::tag('span', $item->description, $o);
+			}
+			if (!empty($caption)) {
+				$caption = Html::tag('span', $caption, ['class' => 'carousel-caption']);
+			}
+
+			$content = $image . $caption;
+			if (!empty($item->url))
+				$content = Html::a($content, $item->url);
 
 			$options = [];
-			if (!empty($image->background))
-				Html::addCssStyle($options, ['background-color' => $image->background]);
+			if (!empty($item->background))
+				Html::addCssStyle($options, ['background-color' => $item->background]);
 
 			$items[] = [
 				'content' => $content,
-				'caption' => $caption,
 				'options' => $options,
 			];
 		}
@@ -109,6 +133,8 @@ class Slider extends Carousel
 		if ($this->model === null)
 			return;
 
+		SliderAsset::register($this->view);
+
 		$height = $this->model->height;
 		$id = $this->id;
 
@@ -118,17 +144,10 @@ class Slider extends Carousel
 			}
 			#{$id}.carousel .item {
 				height: {$height}px;
-				overflow: hidden;
 			}
 			#{$id}.carousel .item > img,
 			#{$id}.carousel .item > a {
 				height: {$height}px;
-				left: 50%;
-				margin-left: -600px;
-				max-width: none;
-				position: absolute;
-				top: 0;
-				width: 1200px;
 			}
 		");
 	}

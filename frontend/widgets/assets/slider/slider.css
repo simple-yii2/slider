@@ -1,0 +1,17 @@
+.carousel .item {
+	overflow: hidden;
+}
+.carousel .item > img,
+.carousel .item > a {
+	left: 50%;
+	margin-left: -600px;
+	max-width: none;
+	position: absolute;
+	top: 0;
+	width: 1200px;
+}
+.carousel-title,
+.carousel-description {
+	display: block;
+}
+
