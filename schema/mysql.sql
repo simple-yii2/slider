@@ -11,7 +11,7 @@ create table if not exists `Slider`
 	`file` varchar(200) default null,
 	`thumb` varchar(200) default null,
 	`title` varchar(200) default null,
-	`description` varchar(200) default null,
+	`description` text default null,
 	`url` varchar(200) default null,
 	`background` varchar(10) default null,
 	primary key (`id`),

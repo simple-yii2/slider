@@ -103,7 +103,8 @@ class SliderImageForm extends Model
 	public function rules()
 	{
 		return [
-			[['file', 'thumb', 'description', 'url'], 'string', 'max' => 200],
+			[['file', 'thumb', 'url'], 'string', 'max' => 200],
+			['description', 'string'],
 			['background', 'string', 'max' => 10],
 			['title', 'string', 'max' => 100],
 			['file', 'required'],
