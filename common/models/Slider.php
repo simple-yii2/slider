@@ -40,11 +40,17 @@ class Slider extends BaseSlider
 
 	/**
 	 * Images
+	 * @param boolean $onlyActive Get only active images
 	 * @return SliderImage[]
 	 */
-	public function getImages()
+	public function getImages($onlyActive = false)
 	{
-		return $this->children()->all();
+		$query = $this->children();
+
+		if ($onlyActive)
+			$query->andWhere(['active' => true]);
+
+		return $query->all();
 	}
 
 }

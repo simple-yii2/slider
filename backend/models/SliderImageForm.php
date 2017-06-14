@@ -25,6 +25,11 @@ class SliderImageForm extends Model
 	public $thumb;
 
 	/**
+	 * @var boolean Active
+	 */
+	public $active;
+
+	/**
 	 * @var string Image title.
 	 */
 	public $title;
@@ -64,6 +69,7 @@ class SliderImageForm extends Model
 		$this->file = $object->file;
 		$this->thumb = $object->thumb;
 		$this->background = $object->background;
+		$this->active = $object->active ? 1 : 0;
 		$this->title = $object->title;
 		$this->description = $object->description;
 		$this->url = $object->url;
@@ -91,6 +97,7 @@ class SliderImageForm extends Model
 		return [
 			'file' => Yii::t('slider', 'Image'),
 			'background' => Yii::t('slider', 'Background color'),
+			'active' => Yii::t('slider', 'Active'),
 			'title' => Yii::t('slider', 'Title'),
 			'description' => Yii::t('slider', 'Description'),
 			'url' => Yii::t('slider', 'Url'),
@@ -106,6 +113,7 @@ class SliderImageForm extends Model
 			[['file', 'thumb', 'url'], 'string', 'max' => 200],
 			['description', 'string'],
 			['background', 'string', 'max' => 10],
+			['active', 'boolean'],
 			['title', 'string', 'max' => 100],
 			['file', 'required'],
 		];
@@ -128,6 +136,7 @@ class SliderImageForm extends Model
 		$object->file = $this->file;
 		$object->thumb = $this->thumb;
 		$object->background = $this->background;
+		$object->active = $this->active == 1;
 		$object->title = $this->title;
 		$object->description = $this->description;
 		$object->url = $this->url;

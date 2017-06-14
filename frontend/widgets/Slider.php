@@ -82,7 +82,7 @@ class Slider extends Carousel
 			return;
 
 		$items = [];
-		foreach ($model->images as $item) {
+		foreach ($model->getImages(true) as $item) {
 			$image = Html::img($item->thumb);
 
 			$caption = '';

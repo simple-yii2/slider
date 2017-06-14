@@ -11,6 +11,18 @@ class SliderImage extends BaseSlider implements StoredInterface
 {
 
 	/**
+	 * @inheritdoc
+	 * Default values
+	 */
+	public function __construct($config = [])
+	{
+		if (!array_key_exists('active', $config))
+			$config['active'] = true;
+
+		parent::__construct($config);
+	}
+
+	/**
 	 * Return files from attributes
 	 * @param array $attributes 
 	 * @return array

@@ -23,6 +23,8 @@ $imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight .
 	'options' => ['class' => 'slider-image-form'],
 ]); ?>
 
+	<?= $form->field($model, 'active')->checkbox() ?>
+
 	<?= $form->field($model, 'title') ?>
 
 	<?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
