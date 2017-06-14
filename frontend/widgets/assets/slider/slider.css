@@ -1,13 +1,12 @@
 .carousel .item {
 	overflow: hidden;
+	padding-left: 50%;
 }
 .carousel .item > img,
 .carousel .item > a {
-	left: 50%;
+	display: block;
 	margin-left: -600px;
 	max-width: none;
-	position: absolute;
-	top: 0;
 	width: 1200px;
 }
 .carousel-title,
