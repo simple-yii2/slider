@@ -6,7 +6,7 @@
 .carousel .item > a {
 	display: block;
 	margin-left: -600px;
-	max-width: none;
+	max-width: none !important;
 	width: 1200px;
 }
 .carousel-title,
