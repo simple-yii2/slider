@@ -17,21 +17,21 @@ if ($height < 20)
 $imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight . '</span>';
 
 ?>
-<?php $form = ActiveForm::begin([
+<?php $f = ActiveForm::begin([
 	'layout' => 'horizontal',
 	'enableClientValidation' => false,
 	'options' => ['class' => 'slider-image-form'],
 ]); ?>
 
-	<?= $form->field($model, 'active')->checkbox() ?>
+	<?= $f->field($form, 'active')->checkbox() ?>
 
-	<?= $form->field($model, 'title') ?>
+	<?= $f->field($form, 'title') ?>
 
-	<?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
+	<?= $f->field($form, 'description')->textarea(['rows' => 3]) ?>
 
-	<?= $form->field($model, 'url') ?>
+	<?= $f->field($form, 'url') ?>
 
-	<?= $form->field($model, 'file')->label($model->getAttributeLabel('file') . $imageSize)->widget(UploadImage::className(), [
+	<?= $f->field($form, 'file')->label($form->getAttributeLabel('file') . $imageSize)->widget(UploadImage::className(), [
 		'id' => 'slider-image',
 		'thumbAttribute' => 'thumb',
 		'thumbWidth' => 1200,
@@ -43,7 +43,7 @@ $imageSize = '<br><span class="label label-default">1200&times' . $thumbHeight .
 		'options' => ['data-url-color' => Url::to(['color'])],
 	]) ?>
 
-	<?= $form->field($model, 'background')->widget('dkhlystov\widgets\Colorpicker', [
+	<?= $f->field($form, 'background')->widget('dkhlystov\widgets\Colorpicker', [
 		'clientOptions' => ['format' => 'hex'],
 	]) ?>
 

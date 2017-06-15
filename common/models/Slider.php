@@ -12,16 +12,17 @@ class Slider extends BaseSlider
 
 	/**
 	 * @inheritdoc
+	 * Default values
 	 */
-	public function init()
+	public function __construct($config = [])
 	{
-		parent::init();
+		if (!array_key_exists('active', $config))
+			$config['active'] = true;
 
-		if ($this->active === null)
-			$this->active = true;
+		if (!array_key_exists('height', $config))
+			$config['height'] = 300;
 
-		if ($this->height === null)
-			$this->height = 300;
+		parent::__construct($config);
 	}
 
 	/**

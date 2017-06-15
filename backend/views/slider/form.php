@@ -6,22 +6,22 @@ use yii\helpers\Html;
 use uploadimage\widgets\UploadImages;
 
 ?>
-<?php $form = ActiveForm::begin([
+<?php $f = ActiveForm::begin([
 	'layout' => 'horizontal',
 	'enableClientValidation' => false,
 	'options' => ['class' => 'slider-form'],
 ]); ?>
 
-	<?= $form->field($model, 'active')->checkbox() ?>
+	<?= $f->field($form, 'active')->checkbox() ?>
 
-	<?= $form->field($model, 'title') ?>
+	<?= $f->field($form, 'title') ?>
 
-	<?= $form->field($model, 'alias') ?>
+	<?= $f->field($form, 'alias') ?>
 
-	<?php if ($model->getObject()->children()->count()) {
-		echo $form->field($model, 'height')->staticControl();
+	<?php if ($form->getModel()->children()->count()) {
+		echo $f->field($form, 'height')->staticControl();
 	} else {
-		echo $form->field($model, 'height');	
+		echo $f->field($form, 'height');	
 	} ?>
 
 	<div class="form-group">

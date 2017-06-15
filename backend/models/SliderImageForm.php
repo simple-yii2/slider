@@ -52,41 +52,41 @@ class SliderImageForm extends Model
 	/**
 	 * @var SliderImage Image model
 	 */
-	private $_object;
+	private $_model;
 
 	/**
 	 * @inheritdoc
-	 * @param SliderImage $object 
+	 * @param SliderImage $model 
 	 */
-	public function __construct(SliderImage $object = null, $config = [])
+	public function __construct(SliderImage $model = null, $config = [])
 	{
-		if ($object === null)
-			$object = new SliderImage;
+		if ($model === null)
+			$model = new SliderImage;
 
-		$this->_object = $object;
+		$this->_model = $model;
 
 		//attributes
-		$this->file = $object->file;
-		$this->thumb = $object->thumb;
-		$this->background = $object->background;
-		$this->active = $object->active ? 1 : 0;
-		$this->title = $object->title;
-		$this->description = $object->description;
-		$this->url = $object->url;
+		$this->file = $model->file;
+		$this->thumb = $model->thumb;
+		$this->background = $model->background;
+		$this->active = $model->active == 0 ? 0 : 1;
+		$this->title = $model->title;
+		$this->description = $model->description;
+		$this->url = $model->url;
 
 		//file caching
-		Yii::$app->storage->cacheObject($object);
+		Yii::$app->storage->cacheObject($model);
 
 		parent::__construct($config);
 	}
 
 	/**
-	 * Object getter
+	 * Model getter
 	 * @return SliderImage
 	 */
-	public function getObject()
+	public function getModel()
 	{
-		return $this->_object;
+		return $this->_model;
 	}
 
 	/**
@@ -130,26 +130,26 @@ class SliderImageForm extends Model
 		if (!$this->validate())
 			return false;
 
-		$object = $this->_object;
+		$model = $this->_model;
 
 		//attributes
-		$object->file = $this->file;
-		$object->thumb = $this->thumb;
-		$object->background = $this->background;
-		$object->active = $this->active == 1;
-		$object->title = $this->title;
-		$object->description = $this->description;
-		$object->url = $this->url;
+		$model->file = $this->file;
+		$model->thumb = $this->thumb;
+		$model->background = $this->background;
+		$model->active = $this->active == 1;
+		$model->title = $this->title;
+		$model->description = $this->description;
+		$model->url = $this->url;
 
 		//files
-		Yii::$app->storage->storeObject($object);
+		Yii::$app->storage->storeObject($model);
 
-		//saving object
-		if ($object->getIsNewRecord()) {
-			if (!$object->appendTo($parent, false))
+		//saving model
+		if ($model->getIsNewRecord()) {
+			if (!$model->appendTo($parent, false))
 				return false;
 		} else {
-			if (!$object->save(false))
+			if (!$model->save(false))
 				return false;
 		}
 

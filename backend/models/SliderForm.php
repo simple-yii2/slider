@@ -37,35 +37,35 @@ class SliderForm extends Model
 	/**
 	 * @var Slider Slider model
 	 */
-	private $_object;
+	private $_model;
 
 	/**
 	 * @inheritdoc
-	 * @param Slider|null $object 
+	 * @param Slider|null $model 
 	 */
-	public function __construct(Slider $object = null, $config = [])
+	public function __construct(Slider $model = null, $config = [])
 	{
-		if ($object === null)
-			$object = new Slider;
+		if ($model === null)
+			$model = new Slider;
 		
-		$this->_object = $object;
+		$this->_model = $model;
 
 		//attributes
-		$this->active = $object->active == 0 ? '0' : '1';
-		$this->title = $object->title;
-		$this->alias = $object->alias;
-		$this->height = $object->height;
+		$this->active = $model->active == 0 ? 0 : 1;
+		$this->title = $model->title;
+		$this->alias = $model->alias;
+		$this->height = $model->height;
 
 		parent::__construct($config);
 	}
 
 	/**
-	 * Object getter
+	 * Model getter
 	 * @return Slider
 	 */
-	public function getObject()
+	public function getModel()
 	{
-		return $this->_object;
+		return $this->_model;
 	}
 
 	/**
@@ -104,20 +104,20 @@ class SliderForm extends Model
 		if (!$this->validate())
 			return false;
 
-		$object = $this->_object;
+		$model = $this->_model;
 
 		//attributes
-		$object->active = $this->active == 1;
-		$object->title = $this->title;
-		$object->alias = $this->alias;
-		$object->height = $this->height;
+		$model->active = $this->active == 1;
+		$model->title = $this->title;
+		$model->alias = $this->alias;
+		$model->height = $this->height;
 
-		//saving object
-		if ($object->getIsNewRecord()) {
-			if (!$object->makeRoot(false))
+		//saving model
+		if ($model->getIsNewRecord()) {
+			if (!$model->makeRoot(false))
 				return false;
 		} else {
-			if (!$object->save(false))
+			if (!$model->save(false))
 				return false;
 		}
 
