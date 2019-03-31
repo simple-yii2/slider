@@ -37,11 +37,13 @@ class Module extends BackendModule
 	 */
 	public function cmsMenu()
 	{
-		if (!Yii::$app->user->can('Slider'))
+		if (!Yii::$app->user->can('Slider')) {
 			return [];
+		}
 
 		return [
-			['label' => Yii::t('slider', 'Slider'), 'url' => ['/slider/slider/index']],
+			'label' => Yii::t('slider', 'Slider'),
+			'url' => ['/slider/slider/index'],
 		];
 	}
 
