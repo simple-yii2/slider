@@ -14,114 +14,105 @@ use cms\slider\common\models\SliderImage;
 class SliderForm extends Model
 {
 
-	/**
-	 * @var boolean Active.
-	 */
-	public $active;
+    /**
+     * @var boolean Active.
+     */
+    public $active;
 
-	/**
-	 * @var string Slider title.
-	 */
-	public $title;
+    /**
+     * @var string Slider title.
+     */
+    public $title;
 
-	/**
-	 * @var string Slider alias.
-	 */
-	public $alias;
+    /**
+     * @var string Slider alias.
+     */
+    public $alias;
 
-	/**
-	 * @var integer Slider widget height.
-	 */
-	public $height;
+    /**
+     * @var Slider Slider model
+     */
+    private $_model;
 
-	/**
-	 * @var Slider Slider model
-	 */
-	private $_model;
+    /**
+     * @inheritdoc
+     * @param Slider|null $model 
+     */
+    public function __construct(Slider $model = null, $config = [])
+    {
+        if ($model === null)
+            $model = new Slider;
+        
+        $this->_model = $model;
 
-	/**
-	 * @inheritdoc
-	 * @param Slider|null $model 
-	 */
-	public function __construct(Slider $model = null, $config = [])
-	{
-		if ($model === null)
-			$model = new Slider;
-		
-		$this->_model = $model;
+        //attributes
+        $this->active = $model->active == 0 ? 0 : 1;
+        $this->title = $model->title;
+        $this->alias = $model->alias;
 
-		//attributes
-		$this->active = $model->active == 0 ? 0 : 1;
-		$this->title = $model->title;
-		$this->alias = $model->alias;
-		$this->height = $model->height;
+        parent::__construct($config);
+    }
 
-		parent::__construct($config);
-	}
+    /**
+     * Model getter
+     * @return Slider
+     */
+    public function getModel()
+    {
+        return $this->_model;
+    }
 
-	/**
-	 * Model getter
-	 * @return Slider
-	 */
-	public function getModel()
-	{
-		return $this->_model;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'active' => Yii::t('slider', 'Active'),
+            'title' => Yii::t('slider', 'Title'),
+            'alias' => Yii::t('slider', 'Alias'),
+        ];
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-			'active' => Yii::t('slider', 'Active'),
-			'title' => Yii::t('slider', 'Title'),
-			'alias' => Yii::t('slider', 'Alias'),
-			'height' => Yii::t('slider', 'Height'),
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            ['active', 'boolean'],
+            [['title', 'alias'], 'string', 'max' => 100],
+            [['title', 'alias'], 'required'],
+        ];
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			['active', 'boolean'],
-			[['title', 'alias'], 'string', 'max' => 100],
-			['height', 'integer', 'min' => 100, 'max' => 1000],
-			[['title', 'alias', 'height'], 'required'],
-		];
-	}
+    /**
+     * Object saving
+     * @return boolean
+     */
+    public function save()
+    {
+        //validation
+        if (!$this->validate())
+            return false;
 
-	/**
-	 * Object saving
-	 * @return boolean
-	 */
-	public function save()
-	{
-		//validation
-		if (!$this->validate())
-			return false;
+        $model = $this->_model;
 
-		$model = $this->_model;
+        //attributes
+        $model->active = $this->active == 1;
+        $model->title = $this->title;
+        $model->alias = $this->alias;
 
-		//attributes
-		$model->active = $this->active == 1;
-		$model->title = $this->title;
-		$model->alias = $this->alias;
-		$model->height = $this->height;
+        //saving model
+        if ($model->getIsNewRecord()) {
+            if (!$model->makeRoot(false))
+                return false;
+        } else {
+            if (!$model->save(false))
+                return false;
+        }
 
-		//saving model
-		if ($model->getIsNewRecord()) {
-			if (!$model->makeRoot(false))
-				return false;
-		} else {
-			if (!$model->save(false))
-				return false;
-		}
-
-		return true;
-	}
+        return true;
+    }
 
 }

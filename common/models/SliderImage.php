@@ -10,62 +10,62 @@ use dkhlystov\storage\components\StoredInterface;
 class SliderImage extends BaseSlider implements StoredInterface
 {
 
-	/**
-	 * @inheritdoc
-	 * Default values
-	 */
-	public function __construct($config = [])
-	{
-		if (!array_key_exists('active', $config))
-			$config['active'] = true;
+    /**
+     * @inheritdoc
+     * Default values
+     */
+    public function __construct($config = [])
+    {
+        if (!array_key_exists('active', $config))
+            $config['active'] = true;
 
-		parent::__construct($config);
-	}
+        parent::__construct($config);
+    }
 
-	/**
-	 * Return files from attributes
-	 * @param array $attributes 
-	 * @return array
-	 */
-	private function getFilesFromAttributes($attributes)
-	{
-		$files = [];
+    /**
+     * Return files from attributes
+     * @param array $attributes 
+     * @return array
+     */
+    private function getFilesFromAttributes($attributes)
+    {
+        $files = [];
 
-		if (!empty($attributes['file']))
-			$files[] = $attributes['file'];
+        if (!empty($attributes['file']))
+            $files[] = $attributes['file'];
 
-		if (!empty($attributes['thumb']))
-			$files[] = $attributes['thumb'];
+        if (!empty($attributes['thumb']))
+            $files[] = $attributes['thumb'];
 
-		return $files;
-	}
+        return $files;
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getOldFiles()
-	{
-		return $this->getFilesFromAttributes($this->getOldAttributes());
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getOldFiles()
+    {
+        return $this->getFilesFromAttributes($this->getOldAttributes());
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getFiles()
-	{
-		return $this->getFilesFromAttributes($this->getAttributes());
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getFiles()
+    {
+        return $this->getFilesFromAttributes($this->getAttributes());
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function setFiles($files)
-	{
-		if (array_key_exists($this->file, $files))
-			$this->file = $files[$this->file];
+    /**
+     * @inheritdoc
+     */
+    public function setFiles($files)
+    {
+        if (array_key_exists($this->file, $files))
+            $this->file = $files[$this->file];
 
-		if (array_key_exists($this->thumb, $files))
-			$this->thumb = $files[$this->thumb];
-	}
+        if (array_key_exists($this->thumb, $files))
+            $this->thumb = $files[$this->thumb];
+    }
 
 }

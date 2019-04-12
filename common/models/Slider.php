@@ -10,48 +10,45 @@ use Yii;
 class Slider extends BaseSlider
 {
 
-	/**
-	 * @inheritdoc
-	 * Default values
-	 */
-	public function __construct($config = [])
-	{
-		if (!array_key_exists('active', $config))
-			$config['active'] = true;
+    /**
+     * @inheritdoc
+     * Default values
+     */
+    public function __construct($config = [])
+    {
+        if (!array_key_exists('active', $config))
+            $config['active'] = true;
 
-		if (!array_key_exists('height', $config))
-			$config['height'] = 300;
+        parent::__construct($config);
+    }
 
-		parent::__construct($config);
-	}
+    /**
+     * Find slider by alias
+     * @param sring $alias Slider alias or id.
+     * @return Slider
+     */
+    public static function findByAlias($alias)
+    {
+        $model = static::findOne(['alias' => $alias]);
+        if ($model === null)
+            $model = static::findOne(['id' => $alias]);
 
-	/**
-	 * Find slider by alias
-	 * @param sring $alias Slider alias or id.
-	 * @return Slider
-	 */
-	public static function findByAlias($alias)
-	{
-		$model = static::findOne(['alias' => $alias]);
-		if ($model === null)
-			$model = static::findOne(['id' => $alias]);
+        return $model;
+    }
 
-		return $model;
-	}
+    /**
+     * Images
+     * @param boolean $onlyActive Get only active images
+     * @return SliderImage[]
+     */
+    public function getImages($onlyActive = false)
+    {
+        $query = $this->children();
 
-	/**
-	 * Images
-	 * @param boolean $onlyActive Get only active images
-	 * @return SliderImage[]
-	 */
-	public function getImages($onlyActive = false)
-	{
-		$query = $this->children();
+        if ($onlyActive)
+            $query->andWhere(['active' => true]);
 
-		if ($onlyActive)
-			$query->andWhere(['active' => true]);
-
-		return $query->all();
-	}
+        return $query->all();
+    }
 
 }
